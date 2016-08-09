@@ -1,22 +1,4 @@
-<html>
-
-<body>
-
-    <img id="car" src="C:\Users\Hitesh\Desktop\RF\RoadFighter\car.png" alt="car">
-    <img id="car1" src="C:\Users\Hitesh\Desktop\RF\RoadFighter\pack1.png" alt="car1">
-    <img id="car2" src="C:\Users\Hitesh\Desktop\RF\RoadFighter\pack2.png" alt="car2">
-    <img id="car3" src="C:\Users\Hitesh\Desktop\RF\RoadFighter\pack3.png" alt="car3">
-	<img id="fire" src="C:\Users\Hitesh\Desktop\RF\RoadFighter\fire.gif" alt="fire">
-
-    <style>
-        img {
-            display: none;
-        }
-	</style>
-</body>
-<canvas id="a_game" width="450" height="350"> </canvas>
-<script>
-    var maxG = 311;
+ var maxG = 311;
     var canvas;
     var canvasContext;
     var playerx = 210;
@@ -250,6 +232,3 @@
         beforey = playery;
 
     }
-</script>
-
-</html>
