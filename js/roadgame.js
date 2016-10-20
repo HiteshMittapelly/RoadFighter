@@ -1,6 +1,7 @@
- var maxG = 311;
+    var maxG = 311;
     var canvas;
     var canvasContext;
+	var intervalId;
     var playerx = 210;
     var playery = 260 + 50;
     var pack1ax = 160;
@@ -19,29 +20,53 @@
     var rate = 300;
     var beforex;
     var beforey = playery;
+	var btn,t,btn2,t2;
 
     document.onkeydown = checkKey;
 
     function checkKey(e) {
-
         e = e || window.event;
-
         if (e.keyCode == '37') {
             moveLeft();
         } else if (e.keyCode == '39') {
             moveRight();
         }
-
     }
 
     window.onload = function() {
         canvas = document.getElementById('a_game');
         canvasContext = canvas.getContext('2d');
-
-        setInterval(update, rate);
-
+		 createButton(); 
+		
+		
+		
+		preInit();
+		 
+       
     }
-
+	
+	
+	createButton = function(){
+		 btn = document.createElement("BUTTON"); 
+         btn.onclick=function(){
+		 btn.disabled = true;	 
+		intervalId = setInterval(update, rate);
+	    } ;		 
+         t = document.createTextNode("Play!!!!");       
+        btn.appendChild(t);                              
+        document.body.appendChild(btn); 
+		
+		btn2 = document.createElement("BUTTON"); 
+         btn2.onclick=function(){
+			 clearInterval(intervalId);
+			
+		     init();
+			 preInit();
+	    } ;		 
+         t2 = document.createTextNode("stop");       
+        btn2.appendChild(t2);                              
+        document.body.appendChild(btn2); 
+	}
 
     update = function() {
         drawCanvas();
@@ -67,36 +92,33 @@
 					canvasContext.drawImage(car1, beforex, beforey, 30, 30);
 				}
             }
-			
         }
          if (playery == pack1ay || playery == pack2ay || playery == pack3ay) {
             if (playery == pack1by) {
                 if (playerx == pack1ax || playerx == pack1bx) {
 					canvasContext.drawImage(fire, playerx, playery-30, 30, 60);
-                    alert("ooooopss your score is  " + score);
-                    init();
+                   stop();
                 }
             } else if (playery == pack2by) {
                 if (playerx == pack2ax || playerx == pack2bx) {
                     canvasContext.drawImage(fire, playerx, playery-30, 30, 60);
-                    alert("ooooopss your score is  " + score);
-                    init();
+                    stop();
                 }
             } else if (playery == pack3by) {
                 if (playerx == pack3ax || playerx == pack3bx) {
                     canvasContext.drawImage(fire, playerx, playery-30, 30, 60);
-                    alert("ooooopss your score is  " + score);
-                    init();
+                   stop();
                 }
             }
         }
-		
-
-        console.log(rate + "");
     }
+	function stop(){
+		confirm("ooooopss your score is  " + score);
+		clearInterval(intervalId);
+        init();
+	}
 
     drawCanvas = function() {
-
         canvasContext.fillStyle = 'green';
         canvasContext.fillRect(0, 50, canvas.width, canvas.height);
         canvasContext.fillStyle = 'black';
@@ -107,11 +129,11 @@
         canvasContext.fillRect(canvas.width / 3 + 100, 50, 1, canvas.height);
         canvasContext.fillStyle = 'white';
         canvasContext.fillRect(canvas.width / 3 + 150, 50, 1, canvas.height);
+		
 
         score++;
         console.log("hellooo there");
     }
-
 
     drawSystem = function() {
 
@@ -122,11 +144,7 @@
         pack3ay += 50;
         pack3by += 50;
 
-
-
         if ((pack1ay > maxG)) {
-
-
             var b = (Math.floor(Math.random() * 100)) % 3;
             if (b == 0) {
                 pack1ax = 160;
@@ -140,7 +158,6 @@
             }
             pack1ay = 60;
             pack1by = 60;
-
         } else if (pack2by > maxG) {
             var b = (Math.floor(Math.random() * 100)) % 3;
             if (b == 0) {
@@ -171,7 +188,6 @@
             pack3by = 60;
         }
 
-
         canvasContext.drawImage(car1, pack1ax, pack1ay, 30, 30);
         canvasContext.drawImage(car2, pack1bx, pack1by, 30, 30);
 
@@ -200,14 +216,18 @@
         drawPlayer();
     }
 
-
-
-
     drawPlayer = function() {
         canvasContext.drawImage(car, playerx, playery, 30, 30);
 		 canvasContext.fillStyle = 'black';
          canvasContext.fillRect(beforex,beforey,30,30);
     }
+	preInit = function(){
+		drawCanvas();
+		drawSystem();
+		drawPlayer();
+		
+	}
+	
 
     init = function() {
         maxG = 311;
@@ -230,5 +250,5 @@
         score = 0;
         beforex = -60;
         beforey = playery;
-
+        btn.disabled=false;
     }
